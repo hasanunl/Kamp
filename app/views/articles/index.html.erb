@@ -1,0 +1,42 @@
+ <%content_for :title do%>
+  Listing Article
+ <%end%>
+ 
+ <%= link_to 'My Blog', controller: 'articles' %>
+ <%= link_to 'New article', new_article_path %>
+
+ <hr>
+
+  <%= form_tag("/search", method: "get") do %>
+    <%= label_tag(:q, "Search for:") %>
+    <%= text_field_tag(:q) %>
+    <%= submit_tag("Search") %>
+  <% end %>
+
+  <h1> Listing articles</h1>
+ 
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    
+    <th>Created At</th>
+    <th>Total Comment</th>
+    <th></th>
+  </tr>
+ 
+   
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.text %></td>
+      <td><%= article.created_at.strftime('%d%b%y') %></td>
+      <td><%= article.comments.size %></td>
+      <td><%= link_to 'Show', article_path(article) %></td>
+      <td><%= link_to 'Edit', edit_article_path(article) %></td>
+      <td><%= link_to 'Destroy', article_path(article),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td>    
+    </tr>
+  <% end %>
+</table>
